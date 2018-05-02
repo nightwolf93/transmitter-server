@@ -1,0 +1,10 @@
+hash: de660fe9390bbd93db11ac1aa026c878500cc246d17d4e968968badeff0e437d
+updated: 2018-05-02T23:25:58.59881+02:00
+imports:
+- name: github.com/BurntSushi/toml
+  version: b26d9c308763d68093482582cea63d69be07a0f0
+- name: github.com/sirupsen/logrus
+  version: c155da19408a8799da419ed3eeb0cb5db0ad5dbc
+- name: gopkg.in/natefinch/lumberjack.v2
+  version: a96e63847dc3c67d17befa69c303767e2f84e54f
+testImports: []

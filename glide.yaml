@@ -1,0 +1,8 @@
+package: github.com/nightwolf93/transmitter-server
+import:
+- package: github.com/sirupsen/logrus
+  version: ^1.0.5
+- package: gopkg.in/natefinch/lumberjack.v2
+  version: ^2.1.0
+- package: github.com/BurntSushi/toml
+  version: ^0.3.0

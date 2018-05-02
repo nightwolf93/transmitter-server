@@ -1,0 +1,5 @@
+[log]
+path = "/Users/nightwolf/go/src/github.com/nightwolf93/transmitter-server/build/transmitter.log"
+maxFileSize = 500
+maxBackups = 10
+maxAge = 20
