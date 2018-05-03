@@ -1,10 +1,25 @@
-hash: de660fe9390bbd93db11ac1aa026c878500cc246d17d4e968968badeff0e437d
-updated: 2018-05-02T23:25:58.59881+02:00
+hash: 306f683711e13b160dfbc7a1bb1fafe8d8d471350ada68fdbee8b1208f57a300
+updated: 2018-05-04T00:04:53.365602+02:00
 imports:
 - name: github.com/BurntSushi/toml
   version: b26d9c308763d68093482582cea63d69be07a0f0
+- name: github.com/golang/protobuf
+  version: b4deda0973fb4c70b50d226b1af49f3da59f5265
+  subpackages:
+  - protoc-gen-go
 - name: github.com/sirupsen/logrus
   version: c155da19408a8799da419ed3eeb0cb5db0ad5dbc
+- name: golang.org/x/crypto
+  version: 1f94bef427e370e425e55b172f3b5e300ef38304
+  subpackages:
+  - ssh/terminal
+- name: golang.org/x/sys
+  version: 78d5f264b493f125018180c204871ecf58a2dce1
+  subpackages:
+  - unix
+  - windows
+- name: google.golang.org/grpc
+  version: d11072e7ca9811b1100b80ca0269ac831f06d024
 - name: gopkg.in/natefinch/lumberjack.v2
   version: a96e63847dc3c67d17befa69c303767e2f84e54f
 testImports: []

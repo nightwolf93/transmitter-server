@@ -6,3 +6,7 @@ import:
   version: ^2.1.0
 - package: github.com/BurntSushi/toml
   version: ^0.3.0
+- package: github.com/golang/protobuf
+  version: ^1.1.0
+  subpackages:
+  - protoc-gen-go

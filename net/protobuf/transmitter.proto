@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "protobuf";
+package transmitter;
+
+// The client driver
+message ClientDriver {
+    string name             = 1;
+    int32 protocolVersion   = 2;
+}
+
+// Server settings and informations
+message ServerInformations {
+    string name             = 1;
+    int32 protocolVersion   = 3;
+}
+
+// The server give to the client all the informations about him on the server
+message HandshakeRequest {
+    string uid                              = 1;
+    ServerInformations serverInformations   = 2;
+}
+
+// The client respond with the informations about him, like the driver he use
+message HandshakeResponse {
+    ClientDriver clientDriver   = 1;
+    string token                = 2; // This token is used for re-identify a client and send him queued data
+}
