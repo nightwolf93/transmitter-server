@@ -3,3 +3,8 @@ path = "/Users/nightwolf/go/src/github.com/nightwolf93/transmitter-server/build/
 maxFileSize = 500
 maxBackups = 10
 maxAge = 20
+
+# Websocket Gateway
+[websocket]
+host = "127.0.0.1"
+port = 6601

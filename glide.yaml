@@ -10,3 +10,11 @@ import:
   version: ^1.1.0
   subpackages:
   - protoc-gen-go
+- package: github.com/gorilla/websocket
+  version: ^1.2.0
+- package: github.com/x-cray/logrus-prefixed-formatter
+  version: ^0.5.2
+- package: github.com/mgutz/ansi
+- package: github.com/t-tomalak/logrus-easy-formatter
+- package: github.com/rs/xid
+  version: ^1.1.0

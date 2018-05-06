@@ -14,7 +14,8 @@ const (
 
 // Config configuration of the application
 type Config struct {
-	Log Log `toml:"log"`
+	Log       Log       `toml:"log"`
+	Websocket Websocket `toml:"websocket"`
 }
 
 // Log is the log section of the config
@@ -23,6 +24,12 @@ type Log struct {
 	MaxFileSize int    `toml:"maxFileSize"`
 	MaxBackups  int    `toml:"maxBackups"`
 	MaxAge      int    `toml:"maxAge"`
+}
+
+// Websocket is the websocket server gateway section of the config
+type Websocket struct {
+	Host string `toml:"host"`
+	Port int    `toml:"port"`
 }
 
 var config *Config
