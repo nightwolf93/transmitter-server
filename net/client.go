@@ -6,6 +6,7 @@ import (
 
 // Client is the struct that handle a client
 type Client struct {
+	ID    string
 	Type  int
 	Alive bool
 

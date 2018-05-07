@@ -63,6 +63,7 @@ func handleNewClient(client *net.Client) {
 			_, message, err := client.WSConn.ReadMessage()
 			if err != nil {
 				log.Errorf("Connection with the client has been closed: %s", err)
+				RemoveClient <- client
 				return
 			}
 			client.WSReceiveMessageChan <- message
