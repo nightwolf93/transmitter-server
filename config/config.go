@@ -28,8 +28,10 @@ type Log struct {
 
 // Websocket is the websocket server gateway section of the config
 type Websocket struct {
-	Host string `toml:"host"`
-	Port int    `toml:"port"`
+	Host            string `toml:"host"`
+	Port            int    `toml:"port"`
+	ReadBufferSize  int    `toml:"readBufferSize"`
+	WriteBufferSize int    `toml:"writeBufferSize"`
 }
 
 var config *Config

@@ -9,16 +9,19 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Type of the client for this gateway
-var typeClient = 1
-
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-}
+var upgrader websocket.Upgrader
 
 // InitWSGatewayServer create the gateway with a websocket entry
-func InitWSGatewayServer(host string, port int) {
+func InitWSGatewayServer(host string, port int, readBufferSize int, writeBufferSize int) {
+	// Initialize the upgrader from the config file
+	upgrader = websocket.Upgrader{
+		ReadBufferSize:  readBufferSize,
+		WriteBufferSize: writeBufferSize,
+		CheckOrigin: func(r *http.Request) bool {
+			return true
+		},
+	}
+
 	// Register the Websocket endpoint
 	http.HandleFunc("/websocket_gateway", func(w http.ResponseWriter, r *http.Request) {
 		log.Infof("Incoming websocket connection ..")
@@ -28,7 +31,12 @@ func InitWSGatewayServer(host string, port int) {
 			return
 		}
 
-		client := &net.Client{Alive: true, Type: typeClient, WSConn: conn, WSReceiveMessageChan: make(chan []byte)}
+		// Create new client
+		client := net.NewClient(net.ClientGatewayTypeWebsocket)
+		client.WSReceiveMessageChan = make(chan []byte)
+		client.WSConn = conn
+
+		// Register the clien to the server correctly
 		handleNewClient(client)
 	})
 

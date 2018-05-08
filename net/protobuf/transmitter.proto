@@ -26,3 +26,9 @@ message HandshakeResponse {
     ClientDriver clientDriver   = 1;
     string token                = 2; // This token is used for re-identify a client and send him queued data
 }
+
+message SubscribeToChannelRequest {
+    string name = 1;
+    string password = 2;
+    repeated string routingKeys = 3;
+}

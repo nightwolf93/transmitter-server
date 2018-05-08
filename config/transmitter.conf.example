@@ -8,3 +8,5 @@ maxAge = 20
 [websocket]
 host = "127.0.0.1"
 port = 6601
+readBufferSize = 1024
+writeBufferSize = 1024
