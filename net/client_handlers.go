@@ -10,7 +10,7 @@ import (
 
 // InitHandlers init client handlers
 func (client *Client) InitHandlers() {
-	client.Handlers = make(map[int]func([]byte))
+	client.Handlers = make(map[int]func(string, []byte))
 	client.Handlers[protocol.HandshakeResponse] = client.handleHandshakeResponse
 	client.Handlers[protocol.SubscribeToChannelRequest] = client.handleSubscribeToChannelRequest
 
@@ -30,15 +30,15 @@ func (client *Client) InitHandlers() {
 
 // RequestHandshake request handshake to the client
 func (client *Client) RequestHandshake() {
-	log.Debugf("Request handshake to the client %s", client.ID)
-	client.SendMessage <- protocol.NewHandshakeRequest("", client.ID, &protobuf.ServerInformations{
+	log.Debugf("Request handshake to the client %s", client.UID)
+	client.SendMessage <- protocol.NewHandshakeRequest("", client.UID, &protobuf.ServerInformations{
 		Name:            common.ApplicationName,
 		ProtocolVersion: common.ApplicationProtocolVersion,
 	})
 }
 
 // handleHandshakeResponse handle the handshake response of the client
-func (client *Client) handleHandshakeResponse(bytes []byte) {
+func (client *Client) handleHandshakeResponse(messageID string, bytes []byte) {
 	payload := &protobuf.HandshakeResponse{}
 	proto.Unmarshal(bytes, payload)
 
@@ -51,14 +51,22 @@ func (client *Client) handleHandshakeResponse(bytes []byte) {
 }
 
 // handleSubscribeToChannelRequest handle the request for joining a channel by the client
-func (client *Client) handleSubscribeToChannelRequest(bytes []byte) {
+func (client *Client) handleSubscribeToChannelRequest(messageID string, bytes []byte) {
 	payload := &protobuf.SubscribeToChannelRequest{}
 	proto.Unmarshal(bytes, payload)
 
 	// Register client to the channel
-	channel := GetOrNewChannel(payload.Name)
-	channel.RegisterClient(client)
+	channel := GetOrNewChannel(payload.Channel)
+	if _, alreadyInChannel := client.SubscribedChannels[channel.Name]; alreadyInChannel {
+		// the client is already registered on this channel
+		client.SendMessage <- protocol.NewSubscribeToChannelResponse(messageID, -1, "Already subscribed to this channel")
+		log.Debugf("The client %s is already registered on the channel %s", client.UID, channel.Name)
+		return
+	}
+
+	sub := channel.RegisterClient(client, payload.RoutingKeys)
+	client.SubscribedChannels[channel.Name] = sub
 
 	// Respond to the client that he is registered to channel
-
+	client.SendMessage <- protocol.NewSubscribeToChannelResponse(messageID, 1, "Subscribed to the channel with success")
 }

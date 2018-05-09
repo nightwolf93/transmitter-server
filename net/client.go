@@ -17,21 +17,34 @@ const (
 
 // Client is the struct that handle a client
 type Client struct {
-	ID            string
+	UID           string
 	TransportType int
 	Alive         bool
-	Handlers      map[int]func([]byte)
+	Handlers      map[int]func(string, []byte)
 	ClientDriver  *protobuf.ClientDriver
+	Peer          *protobuf.PeerItem
 
 	SendMessage chan *protocol.JSONRPCPayload
+
+	// Channel
+	SubscribedChannels map[string]*ChannelSubscriber
 
 	// Specific connection
 	WSConn               *websocket.Conn
 	WSReceiveMessageChan chan []byte
 }
 
+// NewClient create a new client with the given transport type
 func NewClient(transportType int) *Client {
-	client := &Client{Alive: true, TransportType: transportType, ID: common.GenerateLongUniqueID()}
+	client := &Client{
+		Alive:              true,
+		TransportType:      transportType,
+		UID:                common.GenerateLongUniqueID(),
+		SubscribedChannels: make(map[string]*ChannelSubscriber),
+	}
+	client.Peer = &protobuf.PeerItem{
+		Uid: client.UID,
+	}
 	client.InitHandlers()
 	return client
 }
@@ -58,4 +71,11 @@ func (client *Client) sendWebsocketMessage(payload *protocol.JSONRPCPayload) {
 		return
 	}
 	log.Debugf("Send a message to the client using a websocket transport (len: %d)", len(jsonBytes))
+}
+
+// UnRegisterFromAllChannels unregister the client from all subscribed channels
+func (client *Client) UnRegisterFromAllChannels() {
+	for _, sub := range client.SubscribedChannels {
+		sub.Channel.UnRegisterClient(client)
+	}
 }

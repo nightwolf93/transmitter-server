@@ -54,8 +54,8 @@ func InitGateway() {
 }
 
 func addClient(client *net.Client) {
-	Clients[client.ID] = client
-	log.Infof("Client %s registered on the server", client.ID)
+	Clients[client.UID] = client
+	log.Infof("Client %s registered on the server", client.UID)
 
 	// Do the handshake with the client
 	client.RequestHandshake()
@@ -63,7 +63,10 @@ func addClient(client *net.Client) {
 
 func removeClient(client *net.Client) {
 	client.Alive = false
-	delete(Clients, client.ID)
+	client.UnRegisterFromAllChannels()
+
+	// Delete him from the client list
+	delete(Clients, client.UID)
 }
 
 func receiveDataFromClient(client *net.Client, bytes []byte) {
@@ -72,7 +75,7 @@ func receiveDataFromClient(client *net.Client, bytes []byte) {
 
 	// Check if the method is handled, if yes call it
 	if method, found := client.Handlers[jsonPayload.OpCode]; found {
-		method(jsonPayload.Data)
+		method(jsonPayload.ID, jsonPayload.Data)
 	} else {
 		log.Debugf("Can't find the handler for the method '%d'", jsonPayload.OpCode)
 		return

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 
+	"github.com/nightwolf93/transmitter-server/api"
 	"github.com/nightwolf93/transmitter-server/config"
 	"github.com/nightwolf93/transmitter-server/logging"
 	"github.com/nightwolf93/transmitter-server/net/gateway"
@@ -20,6 +21,9 @@ func main() {
 
 	// Init the gateway
 	gateway.InitGateway()
+
+	// Init the api
+	api.InitAPI()
 
 	// Waiting for input
 	for {

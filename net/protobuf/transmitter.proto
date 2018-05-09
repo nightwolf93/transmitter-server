@@ -27,8 +27,30 @@ message HandshakeResponse {
     string token                = 2; // This token is used for re-identify a client and send him queued data
 }
 
+message PeerItem {
+    string uid = 1;
+}
+
 message SubscribeToChannelRequest {
-    string name = 1;
+    string channel = 1;
     string password = 2;
     repeated string routingKeys = 3;
+}
+
+message SubscribeToChannelResponse {
+    int32 result = 1;
+    string comment = 2;
+}
+
+message CustomDataEvent {
+    string eventName = 1;
+    bytes data = 2;
+}
+
+message NewPeer {
+    PeerItem peer = 1;
+}
+
+message RemovePeer {
+    PeerItem peer = 2;
 }
