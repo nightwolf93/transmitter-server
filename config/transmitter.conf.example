@@ -12,3 +12,6 @@ writeBufferSize = 1024
 
 [api]
 key = "91334BB193D4C8E87BB774EEEB38DEF6D247B6AFDA3E847FF36B34C33D" # Change me now
+
+[storage]
+dbfilepath = "./storage"

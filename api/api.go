@@ -14,7 +14,7 @@ func InitAPI() {
 }
 
 func customEventHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+	// vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
 
 }

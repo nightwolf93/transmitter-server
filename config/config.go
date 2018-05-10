@@ -16,6 +16,7 @@ const (
 type Config struct {
 	Log       Log       `toml:"log"`
 	Websocket Websocket `toml:"websocket"`
+	Storage   Storage   `toml:"storage"`
 }
 
 // Log is the log section of the config
@@ -32,6 +33,11 @@ type Websocket struct {
 	Port            int    `toml:"port"`
 	ReadBufferSize  int    `toml:"readBufferSize"`
 	WriteBufferSize int    `toml:"writeBufferSize"`
+}
+
+// Storage is the storage section of the config
+type Storage struct {
+	DBFilePath string `toml:"dbfilepath"`
 }
 
 var config *Config

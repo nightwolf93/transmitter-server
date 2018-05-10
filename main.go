@@ -8,6 +8,7 @@ import (
 	"github.com/nightwolf93/transmitter-server/config"
 	"github.com/nightwolf93/transmitter-server/logging"
 	"github.com/nightwolf93/transmitter-server/net/gateway"
+	"github.com/nightwolf93/transmitter-server/storage"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -18,6 +19,9 @@ func main() {
 	logging.SetupLog()
 
 	log.Info("Starting the Transmitter.Server ...")
+
+	// Initialize storage
+	storage.InitDB()
 
 	// Init the gateway
 	gateway.InitGateway()

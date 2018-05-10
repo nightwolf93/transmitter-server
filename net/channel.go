@@ -103,3 +103,8 @@ func (channel *Channel) UnRegisterClient(client *Client) {
 	//TODO: Broadcast peer disconnection to the channel
 	log.Debugf("Client %s unregistered from the channel %s (count: %d)", client.UID, channel.Name, len(channel.Subscribers))
 }
+
+// LoadChannelsFromDatabase load all channels from the database
+func LoadChannelsFromDatabase() {
+
+}
