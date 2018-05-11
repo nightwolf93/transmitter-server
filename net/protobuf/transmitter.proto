@@ -35,6 +35,7 @@ message SubscribeToChannelRequest {
     string channel = 1;
     string password = 2;
     repeated string routingKeys = 3;
+    map<string, string> opts = 4;
 }
 
 message SubscribeToChannelResponse {

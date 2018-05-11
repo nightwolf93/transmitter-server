@@ -7,6 +7,7 @@ import (
 	"github.com/nightwolf93/transmitter-server/api"
 	"github.com/nightwolf93/transmitter-server/config"
 	"github.com/nightwolf93/transmitter-server/logging"
+	"github.com/nightwolf93/transmitter-server/net"
 	"github.com/nightwolf93/transmitter-server/net/gateway"
 	"github.com/nightwolf93/transmitter-server/storage"
 
@@ -22,6 +23,7 @@ func main() {
 
 	// Initialize storage
 	storage.InitDB()
+	net.LoadChannelsFromDatabase()
 
 	// Init the gateway
 	gateway.InitGateway()
